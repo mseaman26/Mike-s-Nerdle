@@ -1,10 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 import MainPage from './components/MainPage'
+import { GuessesProvider } from './utils/guessesContext'
 
 function App() {
   return (
-    <MainPage></MainPage>
+    <GuessesProvider>
+      <MainPage></MainPage>
+    </GuessesProvider>
+    
   );
 }
 
