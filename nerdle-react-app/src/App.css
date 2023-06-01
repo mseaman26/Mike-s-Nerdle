@@ -43,6 +43,9 @@
   margin: 100px auto 0 auto
 }
 .guessBox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
   width: 100%;
   height: 45px;

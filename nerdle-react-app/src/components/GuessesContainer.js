@@ -1,50 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useGuessesContext } from "../utils/guessesContext";
 
 const GuessesContainer = ()=> {
 
-    const {guesses, setGuesses, currentGuess, setCurrentGuess} = useGuessesContext()
-    console.log(guesses)
-
+    const [guesses, setGuesses] = useState(localStorage.getItem('guesses') || [])
+    const [currentGuess, setCurrentGuess] = useState([])
+    let storedGuesses = localStorage.getItem('guesses') || []
     const equationKeys = ['1','2','3','4','5','6','7','8','9','0','+','-','*','/','=']
-    const functionalKeys = ['Enter','Backspace']
 
-    const boxes = []
-    for(let i = 0; i < 48; i++){
-        boxes.push(<div className="guessBox" id={`guessBox${i}`}></div>)
-    }
-
+    const boxes = Array.from({ length: 48 }, (_, index) => {
+        const text = guesses[index] || ""; // Use data[index] if available, otherwise use an empty string
+        return <div key={index} className="guessBox">{text}</div>;
+      });
     const handleKeyDown = (event) => {
         if(equationKeys.includes(event.key)){
-            console.log(currentGuess.length)
             if(currentGuess.length < 8){
-                setCurrentGuess((prevGuess) => prevGuess + event.key)
-            }
-            
-        }  
+                setCurrentGuess((prevGuess) => [...prevGuess, event.key])
+                setGuesses((prevGuesses) => [...currentGuess])
+            } 
+        }   
+        console.log(currentGuess)
     }
     console.log(currentGuess)
+    console.log(guesses)
 
     useEffect(() => {
+        const updateGuesses = () => {
+            setGuesses([...storedGuesses, ...currentGuess]);
+          };
         window.addEventListener('keydown', handleKeyDown)
+        updateGuesses()
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
           };
-    }, [currentGuess])
+    }, [currentGuess, setGuesses])
+
     return(
         <>
         <div className="guessesContainer">
-            {boxes.map((box, index) => {
-                return(
-                    <div key={index} className="guessBoxContainer">
-                    {box}
-                    </div>
-                )
-            })}
+            {boxes}
         </div>
         </>
     )
+
 }
 
 export default GuessesContainer

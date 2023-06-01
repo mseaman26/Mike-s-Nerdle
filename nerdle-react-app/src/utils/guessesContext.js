@@ -6,8 +6,9 @@ export const useGuessesContext = () => useContext(GuessesContext)
 
 export const GuessesProvider = ({children}) => {
 
-    const[guesses, setGuesses] = useState(localStorage.getItem('guesses') || [])
-    const[currentGuess, setCurrentGuess] = useState('')
+    const[guesses, setGuesses] = useState(localStorage.getItem('guesses') || ['1','2'])
+
+    const[currentGuess, setCurrentGuess] = useState([])
 
 
     return(
