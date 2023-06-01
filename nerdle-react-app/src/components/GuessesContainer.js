@@ -17,13 +17,18 @@ const GuessesContainer = ()=> {
         if(equationKeys.includes(event.key)){
             if(currentGuess.length < 8){
                 setCurrentGuess((prevGuess) => [...prevGuess, event.key])
-                setGuesses((prevGuesses) => [...currentGuess])
+                setGuesses((prevGuesses) => [...storedGuesses, ...currentGuess])
             } 
-        }   
-        console.log(currentGuess)
+        } 
+        if(event.key === 'Backspace'){
+            console.log(currentGuess)
+            let newGuess = currentGuess
+            newGuess.pop()
+            setCurrentGuess(newGuess)
+            setGuesses((prevGuesses) => [...storedGuesses, ...currentGuess])
+        }  
     }
-    console.log(currentGuess)
-    console.log(guesses)
+
 
     useEffect(() => {
         const updateGuesses = () => {
@@ -34,7 +39,7 @@ const GuessesContainer = ()=> {
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
           };
-    }, [currentGuess, setGuesses])
+    }, [currentGuess, setGuesses, setCurrentGuess])
 
     return(
         <>

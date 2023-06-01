@@ -11,10 +11,6 @@ const MainPage = () => {
     let leftSide = equation.split('=')[0]
     let rightSide = equation.split('=')[1]
 
-    
-
-   
-
    
     return(
         <>
