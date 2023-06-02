@@ -64,13 +64,13 @@
 .guessBox_blank{
   background-color: var(--blank);
 }
-.guessBox_absent{
+.absent{
   background-color: var(--absent);
 }
-.guessBox_misplaced{
+.misplaced{
   background-color: var(--misplaced);
 }
-.guessBox_correct{
+.correct{
   background-color: var(--correct);
 }
 

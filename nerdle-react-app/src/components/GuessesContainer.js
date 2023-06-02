@@ -23,14 +23,14 @@ const GuessesContainer = ()=> {
         for(let i = 0; i < guessString.length; i++){
             //check for absent chars
             if(!comparisonEquation.includes(guessString[i])){
-                newColors.push('guessBox guessBox_absent')
+                newColors.push('guessBox absent')
             //check for misplaced chars
             }else if(comparisonEquation.includes(guessString[i]) && equation[i] !== guessString[i]){
                 comparisonEquation[comparisonEquation.indexOf(guessString[i])] = 'X'
-                newColors.push('guessBox guessBox_misplaced')
+                newColors.push('guessBox misplaced')
             }else{
                 comparisonEquation[comparisonEquation.indexOf(guessString[i])] = 'X'
-                newColors.push('guessBox guessBox_correct')
+                newColors.push('guessBox correct')
                 console.log(classesArray.length)
             }
             console.log(classesArray)
