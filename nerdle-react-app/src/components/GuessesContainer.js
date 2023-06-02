@@ -4,29 +4,37 @@ const math = require('mathjs')
 
 const GuessesContainer = (props)=> {
 
+    const equation = '140/4=35'
     const [guesses, setGuesses] = useState(JSON.parse(localStorage.getItem('guesses')) || [])
     const [currentGuess, setCurrentGuess] = useState([])
     const [classesArray, setClassesArray] = useState(JSON.parse(localStorage.getItem('classesArray')) || [])
     let storedGuesses = JSON.parse(localStorage.getItem('guesses')) || []
     const equationKeys = ['1','2','3','4','5','6','7','8','9','0','+','-','*','/','=']
 
-    const evaluateGuesses = () => {
-        for(let i = 0; i < guesses.length; i += 8){
-            let equationString = ''
-            for(let j = i; j < i + 8; j++){
-                equationString+=guesses[j]
-            }
-            if(!equationString.includes('=')){
-                console.log('equation must include an equals operator')
-            }
-        }
-    }
     //build boxes
     const boxes = Array.from({ length: 48 }, (_, index) => {
         const text = guesses[index] || ""; // Use data[index] if available, otherwise use an empty string
-        return <div key={index} className="guessBox ">{text}</div>;
+        return <div key={index} className={classesArray[index] ? classesArray[index] : 'guessBox guessBox_blank'}>{text}</div>;
       });
-
+    
+    //color code gues
+    const colorCodeGuess = (guessString) => {
+        console.log('equation = ', equation)
+        let newColors = []
+        let comparisonEquation = equation.split('')
+        for(let i = 0; i < guessString.length; i++){
+            //check for absent chars
+            if(!comparisonEquation.includes(guessString[i])){
+                newColors.push('guessBox guessBox_absent')
+            }else{
+                newColors.push('')
+                console.log(classesArray)
+            }
+            console.log(classesArray)
+        }
+        setClassesArray([...classesArray,...newColors])
+    }
+    
     const handleKeyDown = (event) => {
         if(equationKeys.includes(event.key)){
             if(currentGuess.length < 8){
@@ -58,6 +66,7 @@ const GuessesContainer = (props)=> {
                         setGuesses([...storedGuesses, ...currentGuess])
                         localStorage.setItem('guesses', JSON.stringify([...storedGuesses,...currentGuess]))
                         setCurrentGuess([])
+                        colorCodeGuess(currentGuessstring)
                     }else{
                         console.log('that equation does not compute')
                     }
@@ -77,10 +86,11 @@ const GuessesContainer = (props)=> {
           };
         window.addEventListener('keydown', handleKeyDown)
         updateGuesses()
+        console.log(classesArray)
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
           };
-    }, [currentGuess, setGuesses, setCurrentGuess])
+    }, [currentGuess, setGuesses, setCurrentGuess, classesArray])
 
     return(
         <>
