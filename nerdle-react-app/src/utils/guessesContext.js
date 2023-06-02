@@ -6,13 +6,14 @@ export const useGuessesContext = () => useContext(GuessesContext)
 
 export const GuessesProvider = ({children}) => {
 
-    const[guesses, setGuesses] = useState(localStorage.getItem('guesses') || ['1','2'])
-
-    const[currentGuess, setCurrentGuess] = useState([])
+    const equation = '140/4=35'
+    const [guesses, setGuesses] = useState(JSON.parse(localStorage.getItem('guesses')) || [])
+    const [currentGuess, setCurrentGuess] = useState([])
+    const [classesArray, setClassesArray] = useState(JSON.parse(localStorage.getItem('classesArray')) || [])
 
 
     return(
-        <GuessesContext.Provider value={{guesses, setGuesses, currentGuess, setCurrentGuess}}>
+        <GuessesContext.Provider value={{equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray}}>
             {children}
         </GuessesContext.Provider>
     )

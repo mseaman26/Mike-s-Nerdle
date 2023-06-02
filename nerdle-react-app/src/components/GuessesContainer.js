@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useEffect } from "react";
+import { useGuessesContext } from "../utils/guessesContext";
 const math = require('mathjs')
 
-const GuessesContainer = (props)=> {
-
-    const equation = '140/4=35'
-    const [guesses, setGuesses] = useState(JSON.parse(localStorage.getItem('guesses')) || [])
-    const [currentGuess, setCurrentGuess] = useState([])
-    const [classesArray, setClassesArray] = useState(JSON.parse(localStorage.getItem('classesArray')) || [])
+const GuessesContainer = ()=> {
+    const {equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray} = useGuessesContext()
+    // const equation = '140/4=35'
+    // const [guesses, setGuesses] = useState(JSON.parse(localStorage.getItem('guesses')) || [])
+    // const [currentGuess, setCurrentGuess] = useState([])
+    // const [classesArray, setClassesArray] = useState(JSON.parse(localStorage.getItem('classesArray')) || [])
     let storedGuesses = JSON.parse(localStorage.getItem('guesses')) || []
     const equationKeys = ['1','2','3','4','5','6','7','8','9','0','+','-','*','/','=']
 
