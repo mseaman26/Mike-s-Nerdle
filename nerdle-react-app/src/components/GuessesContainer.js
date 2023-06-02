@@ -5,10 +5,7 @@ const math = require('mathjs')
 
 const GuessesContainer = ()=> {
     const {equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray} = useGuessesContext()
-    // const equation = '140/4=35'
-    // const [guesses, setGuesses] = useState(JSON.parse(localStorage.getItem('guesses')) || [])
-    // const [currentGuess, setCurrentGuess] = useState([])
-    // const [classesArray, setClassesArray] = useState(JSON.parse(localStorage.getItem('classesArray')) || [])
+
     let storedGuesses = JSON.parse(localStorage.getItem('guesses')) || []
     const equationKeys = ['1','2','3','4','5','6','7','8','9','0','+','-','*','/','=']
 
@@ -18,7 +15,7 @@ const GuessesContainer = ()=> {
         return <div key={index} className={classesArray[index] ? classesArray[index] : 'guessBox guessBox_blank'}>{text}</div>;
       });
     
-    //color code gues
+    //color code guesses
     const colorCodeGuess = (guessString) => {
         console.log('equation = ', equation)
         let newColors = []
@@ -27,13 +24,19 @@ const GuessesContainer = ()=> {
             //check for absent chars
             if(!comparisonEquation.includes(guessString[i])){
                 newColors.push('guessBox guessBox_absent')
+            //
+            }else if(comparisonEquation.includes(guessString[i]) && comparisonEquation[i] !== guessString[i]){
+                comparisonEquation[comparisonEquation.indexOf(guessString[i])] = 'X'
+                newColors.push('guessBox guessBox_misplaced')
             }else{
-                newColors.push('')
-                console.log(classesArray)
+                comparisonEquation[comparisonEquation.indexOf(guessString[i])] = 'X'
+                newColors.push('guessBox guessBox_correct')
+                console.log(classesArray.length)
             }
             console.log(classesArray)
         }
         setClassesArray([...classesArray,...newColors])
+        
     }
     
     const handleKeyDown = (event) => {
@@ -87,6 +90,7 @@ const GuessesContainer = ()=> {
           };
         window.addEventListener('keydown', handleKeyDown)
         updateGuesses()
+        localStorage.setItem('classesArray', JSON.stringify(classesArray))
         console.log(classesArray)
         return () => {
             window.removeEventListener('keydown', handleKeyDown);

@@ -67,6 +67,12 @@
 .guessBox_absent{
   background-color: var(--absent);
 }
+.guessBox_misplaced{
+  background-color: var(--misplaced);
+}
+.guessBox_correct{
+  background-color: var(--correct);
+}
 
 .guessesContainer{
   display: flex;
