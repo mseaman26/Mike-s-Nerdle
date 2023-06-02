@@ -3,7 +3,7 @@ import React from "react";
 import GuessesContainer from "./GuessesContainer";
 import Keyboard from "./Keyboard";
 import { useEffect } from "react";
-const math = require('mathjs')
+
 
 const MainPage = () => {
 
