@@ -1,4 +1,5 @@
 import React from "react";
+import { useGuessesContext } from "../utils/guessesContext";
 
 const Keyboard = () => {
 

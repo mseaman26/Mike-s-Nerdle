@@ -24,8 +24,8 @@ const GuessesContainer = ()=> {
             //check for absent chars
             if(!comparisonEquation.includes(guessString[i])){
                 newColors.push('guessBox guessBox_absent')
-            //
-            }else if(comparisonEquation.includes(guessString[i]) && comparisonEquation[i] !== guessString[i]){
+            //check for misplaced chars
+            }else if(comparisonEquation.includes(guessString[i]) && equation[i] !== guessString[i]){
                 comparisonEquation[comparisonEquation.indexOf(guessString[i])] = 'X'
                 newColors.push('guessBox guessBox_misplaced')
             }else{
