@@ -95,8 +95,31 @@ const GuessesContainer = ()=> {
             }
         }
     }
-
-    
+    const updateKeys = () => {
+        setKeyClassesObj((prevKeyClassesObj) => {
+          const updatedKeyClassesObj = { ...prevKeyClassesObj };
+      
+          for (let i = 0; i < guesses.length; i++) {
+            if (classesArray[i] === "guessBox correct") {
+              updatedKeyClassesObj[guesses[i]] = "correct";
+            } else if (
+              classesArray[i] === "guessBox misplaced" &&
+              updatedKeyClassesObj[guesses[i]] !== "correct"
+            ) {
+              updatedKeyClassesObj[guesses[i]] = "misplaced";
+            } else if (
+              classesArray[i] === "guessBox absent" &&
+              updatedKeyClassesObj[guesses[i]] !== "correct" &&
+              updatedKeyClassesObj[guesses[i]] !== "misplaced"
+            ) {
+              updatedKeyClassesObj[guesses[i]] = "absent";
+            }
+          }
+      
+          return updatedKeyClassesObj;
+        });
+      };
+         
     useEffect(() => {
         const updateGuesses = () => {
             setGuesses([...storedGuesses, ...currentGuess]);
@@ -104,32 +127,22 @@ const GuessesContainer = ()=> {
         window.addEventListener('keydown', handleKeyDown)
         window.addEventListener('click', handleKeyDown)
         updateGuesses()
-        for(let i = 0; i < guesses.length; i++){
-             //color code keys by updating keyClassesObj
-        //if the classname for this character is coded as correct, code that key as correct
-        if(classesArray[i] === "guessBox correct"){
-            console.log(guesses[i], " is correct")
-            // setKeyClassesObj({...keyClassesObj, [guesses[i]]: 'correct'});
-            setKeyClassesObj((prev) => ({...prev, [guesses[i]]: 'correct'}))
         
-        //if the classname for this character is coded as misplaced AND the keyObject value
-        }else if(classesArray[i] === "guessBox misplaced" && keyClassesObj[guesses[i]] !== "guessBox correct"){
-            setKeyClassesObj((prev) => ({...prev, [guesses[i]]: 'misplaced'}))
-        }else if(classesArray[i] === "guessBox absent" && keyClassesObj[guesses[i]] !== "guessBox correct" && keyClassesObj[guesses[i]] !== "guessBox misplaced"){
-            setKeyClassesObj((prev) => ({...prev, [guesses[i]]: 'absent'}))
-        }
-        }
         localStorage.setItem('classesArray', JSON.stringify(classesArray))
+        updateKeys()
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener("click", handleKeyDown);
           };
         
-    }, [currentGuess, setGuesses, setCurrentGuess, classesArray])
+    }, [currentGuess, setGuesses, setCurrentGuess, classesArray,])
 
     useEffect(() => {
         console.log(keyClassesObj);
     }, [keyClassesObj]);
+    useEffect(() => {
+        console.log(keyClassesObj);
+    }, [setKeyClassesObj])
     
 
     return(
