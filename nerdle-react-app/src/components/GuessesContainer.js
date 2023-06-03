@@ -54,7 +54,6 @@ const GuessesContainer = ()=> {
                 setGuesses([...storedGuesses, ...currentGuess])
             } 
         } 
-        console.log(keyEntered)
         if(keyEntered === 'Backspace' || keyEntered === 'Delete'){
             console.log('keyEntered, ', keyEntered)
             setMessageText('')
@@ -80,6 +79,9 @@ const GuessesContainer = ()=> {
                         localStorage.setItem('guesses', JSON.stringify([...storedGuesses,...currentGuess]))
                         setCurrentGuess([])
                         colorCodeGuess(currentGuessstring)
+                        if(currentGuessstring === equation){
+                            setMessageText('YOU GOT IT!!!!')
+                        }
                     }else{
                         setMessageText('That equation does not compute!')
                     }
@@ -88,6 +90,8 @@ const GuessesContainer = ()=> {
                 }
                 
                 
+            }else{
+                setMessageText('Your equation must be 8 characters long and include an equals sign')
             }
         }
     }
@@ -124,9 +128,9 @@ const GuessesContainer = ()=> {
     }, [currentGuess, setGuesses, setCurrentGuess, classesArray])
 
     useEffect(() => {
-  console.log(keyClassesObj);
-}, [keyClassesObj]);
-
+        console.log(keyClassesObj);
+    }, [keyClassesObj]);
+    
 
     return(
         <>
