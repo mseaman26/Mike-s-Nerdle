@@ -4,20 +4,20 @@ import { useGuessesContext } from "../utils/guessesContext";
 const math = require('mathjs')
 
 const GuessesContainer = ()=> {
-    const {equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray} = useGuessesContext()
+    const {equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj} = useGuessesContext()
 
     let storedGuesses = JSON.parse(localStorage.getItem('guesses')) || []
     const equationKeys = ['1','2','3','4','5','6','7','8','9','0','+','-','*','/','=']
 
-    //build boxes
+    //build boxes and color code keys
     const boxes = Array.from({ length: 48 }, (_, index) => {
         const text = guesses[index] || ""; // Use data[index] if available, otherwise use an empty string
+   
         return <div key={index} className={classesArray[index] ? classesArray[index] : 'guessBox guessBox_blank'}>{text}</div>;
       });
     
     //color code guesses
     const colorCodeGuess = (guessString) => {
-        console.log('equation = ', equation)
         let newColors = []
         let comparisonEquation = equation.split('')
         for(let i = 0; i < guessString.length; i++){
@@ -31,9 +31,7 @@ const GuessesContainer = ()=> {
             }else{
                 comparisonEquation[comparisonEquation.indexOf(guessString[i])] = 'X'
                 newColors.push('guessBox correct')
-                console.log(classesArray.length)
             }
-            console.log(classesArray)
         }
         setClassesArray([...classesArray,...newColors])
         
@@ -62,7 +60,6 @@ const GuessesContainer = ()=> {
                 }
                 let leftSide = currentGuessstring.split('=')[0]
                 let rightSide = currentGuessstring.split('=')[1]
-                console.log(leftSide, rightSide)
 
                 if(rightSide && leftSide){
                     if(math.evaluate(leftSide) === math.evaluate(rightSide)){
@@ -90,12 +87,32 @@ const GuessesContainer = ()=> {
           };
         window.addEventListener('keydown', handleKeyDown)
         updateGuesses()
+        for(let i = 0; i < guesses.length; i++){
+             //color code keys by updating keyClassesObj
+        //if the classname for this character is coded as correct, code that key as correct
+        if(classesArray[i] === "guessBox correct"){
+            console.log(guesses[i], " is correct")
+            // setKeyClassesObj({...keyClassesObj, [guesses[i]]: 'correct'});
+            setKeyClassesObj((prev) => ({...prev, [guesses[i]]: 'correct'}))
+        
+        //if the classname for this character is coded as misplaced AND the keyObject value
+        }else if(classesArray[i] === "guessBox misplaced" && keyClassesObj[guesses[i]] !== "guessBox correct"){
+            setKeyClassesObj((prev) => ({...prev, [guesses[i]]: 'misplaced'}))
+        }else if(classesArray[i] === "guessBox absent" && keyClassesObj[guesses[i]] !== "guessBox correct" && keyClassesObj[guesses[i]] !== "guessBox misplaced"){
+            setKeyClassesObj((prev) => ({...prev, [guesses[i]]: 'absent'}))
+        }
+        }
         localStorage.setItem('classesArray', JSON.stringify(classesArray))
-        console.log(classesArray)
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
           };
+        
     }, [currentGuess, setGuesses, setCurrentGuess, classesArray])
+
+    useEffect(() => {
+  console.log(keyClassesObj);
+}, [keyClassesObj]);
+
 
     return(
         <>
