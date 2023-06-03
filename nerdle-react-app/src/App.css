@@ -45,9 +45,14 @@
   }
 }
 #header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   height: 50px;
   max-width: 370px;
   background-color: black;
+  color: white;
   margin: 100px auto 0 auto
 }
 .guessBox{
@@ -66,12 +71,15 @@
 }
 .absent{
   background-color: var(--absent);
+  color: white;
 }
 .misplaced{
   background-color: var(--misplaced);
+  color: white;
 }
 .correct{
   background-color: var(--correct);
+  color: white;
 }
 
 .guessesContainer{
@@ -112,6 +120,7 @@
 }
 .keyButton_blank{
   background-color: rgb(196, 207, 220);
+  color: black;
 }
 .keyButtonRow2{
   padding-left: 10px;

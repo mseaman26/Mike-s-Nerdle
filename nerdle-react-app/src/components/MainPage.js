@@ -2,21 +2,16 @@
 import React from "react";
 import GuessesContainer from "./GuessesContainer";
 import Keyboard from "./Keyboard";
-import { useEffect } from "react";
+import { useGuessesContext } from "../utils/guessesContext";
 
 
 const MainPage = () => {
 
-    const equation = '140/4=35'
-    let leftSide = equation.split('=')[0]
-    let rightSide = equation.split('=')[1]
-
-   
+const{ messageText } = useGuessesContext()
     return(
         <>
-        <div id="header"></div>
-        <GuessesContainer equation={equation}></GuessesContainer>
-        <Keyboard></Keyboard>
+        <div id="header">{messageText}</div>
+        <GuessesContainer></GuessesContainer>
         </>
     )
 

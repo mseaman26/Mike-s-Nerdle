@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import { useEffect } from "react";
 import { useGuessesContext } from "../utils/guessesContext";
+import Keyboard from "./Keyboard";
 const math = require('mathjs')
 
 const GuessesContainer = ()=> {
-    const {equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj} = useGuessesContext()
+    const {equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, setMessageText} = useGuessesContext()
 
     let storedGuesses = JSON.parse(localStorage.getItem('guesses')) || []
     const equationKeys = ['1','2','3','4','5','6','7','8','9','0','+','-','*','/','=']
@@ -38,13 +39,25 @@ const GuessesContainer = ()=> {
     }
     
     const handleKeyDown = (event) => {
-        if(equationKeys.includes(event.key)){
+        console.log(event)
+        let keyEntered
+        if(event.type === 'click'){
+            
+            keyEntered = event.target.innerText
+        }else{
+            keyEntered = event.key
+        }
+        if(equationKeys.includes(keyEntered)){
             if(currentGuess.length < 8){
-                setCurrentGuess((prevGuess) => [...prevGuess, event.key])
+                console.log('keyEntered, ', keyEntered)
+                setCurrentGuess((prevGuess) => [...prevGuess, keyEntered])
                 setGuesses([...storedGuesses, ...currentGuess])
             } 
         } 
-        if(event.key === 'Backspace'){
+        console.log(keyEntered)
+        if(keyEntered === 'Backspace' || keyEntered === 'Delete'){
+            console.log('keyEntered, ', keyEntered)
+            setMessageText('')
             let newGuess = currentGuess
             newGuess.pop()
             setCurrentGuess(newGuess)
@@ -52,7 +65,7 @@ const GuessesContainer = ()=> {
         }  
 
         //Evaluate Guess
-        if(event.key === 'Enter'){
+        if(keyEntered === 'Enter'){
             if(currentGuess.length === 8){
                 let currentGuessstring = ''
                 for(let i = 0; i < currentGuess.length; i++){
@@ -63,16 +76,15 @@ const GuessesContainer = ()=> {
 
                 if(rightSide && leftSide){
                     if(math.evaluate(leftSide) === math.evaluate(rightSide)){
-                        console.log('equation evaluates correctly')
                         setGuesses([...storedGuesses, ...currentGuess])
                         localStorage.setItem('guesses', JSON.stringify([...storedGuesses,...currentGuess]))
                         setCurrentGuess([])
                         colorCodeGuess(currentGuessstring)
                     }else{
-                        console.log('that equation does not compute')
+                        setMessageText('That equation does not compute!')
                     }
                 }else{
-                    console.log('you need to propery place an equals sign in your equation')
+                    setMessageText('You need to propery place an equals sign in your equation!')
                 }
                 
                 
@@ -86,6 +98,7 @@ const GuessesContainer = ()=> {
             setGuesses([...storedGuesses, ...currentGuess]);
           };
         window.addEventListener('keydown', handleKeyDown)
+        window.addEventListener('click', handleKeyDown)
         updateGuesses()
         for(let i = 0; i < guesses.length; i++){
              //color code keys by updating keyClassesObj
@@ -105,6 +118,7 @@ const GuessesContainer = ()=> {
         localStorage.setItem('classesArray', JSON.stringify(classesArray))
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener("click", handleKeyDown);
           };
         
     }, [currentGuess, setGuesses, setCurrentGuess, classesArray])
@@ -119,6 +133,7 @@ const GuessesContainer = ()=> {
         <div className="guessesContainer">
             {boxes}
         </div>
+        <Keyboard onClick={handleKeyDown}></Keyboard>
         </>
     )
 

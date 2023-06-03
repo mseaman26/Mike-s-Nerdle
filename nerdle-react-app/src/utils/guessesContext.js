@@ -11,10 +11,11 @@ export const GuessesProvider = ({children}) => {
     const [currentGuess, setCurrentGuess] = useState([])
     const [classesArray, setClassesArray] = useState(JSON.parse(localStorage.getItem('classesArray')) || [])
     const [keyClassesObj, setKeyClassesObj] = useState({})
+    const [messageText, setMessageText] = useState('')
 
 
     return(
-        <GuessesContext.Provider value={{equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj}}>
+        <GuessesContext.Provider value={{equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, messageText, setMessageText}}>
             {children}
         </GuessesContext.Provider>
     )
