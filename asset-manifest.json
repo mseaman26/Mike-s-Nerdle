@@ -1,16 +1,15 @@
 {
   "files": {
     "main.css": "/Mike-s-Nerdle/static/css/main.99defc0e.css",
-    "main.js": "/Mike-s-Nerdle/static/js/main.50806890.js",
+    "main.js": "/Mike-s-Nerdle/static/js/main.bd308378.js",
     "static/js/787.102daeef.chunk.js": "/Mike-s-Nerdle/static/js/787.102daeef.chunk.js",
-    "static/media/logo.svg": "/Mike-s-Nerdle/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/Mike-s-Nerdle/index.html",
     "main.99defc0e.css.map": "/Mike-s-Nerdle/static/css/main.99defc0e.css.map",
-    "main.50806890.js.map": "/Mike-s-Nerdle/static/js/main.50806890.js.map",
+    "main.bd308378.js.map": "/Mike-s-Nerdle/static/js/main.bd308378.js.map",
     "787.102daeef.chunk.js.map": "/Mike-s-Nerdle/static/js/787.102daeef.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.99defc0e.css",
-    "static/js/main.50806890.js"
+    "static/js/main.bd308378.js"
   ]
 }
