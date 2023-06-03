@@ -5,7 +5,7 @@ import Keyboard from "./Keyboard";
 const math = require('mathjs')
 
 const GuessesContainer = ()=> {
-    const {equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, setMessageText} = useGuessesContext()
+    const {equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, setMessageText, gameOver, setGameOver} = useGuessesContext()
 
     let storedGuesses = JSON.parse(localStorage.getItem('guesses')) || []
     const equationKeys = ['1','2','3','4','5','6','7','8','9','0','+','-','*','/','=']
@@ -39,6 +39,9 @@ const GuessesContainer = ()=> {
     }
     
     const handleKeyDown = (event) => {
+        if(gameOver === true){
+            return
+        }
         console.log(event)
         let keyEntered
         if(event.key.type === 'click'){
@@ -81,6 +84,7 @@ const GuessesContainer = ()=> {
                         colorCodeGuess(currentGuessstring)
                         if(currentGuessstring === equation){
                             setMessageText('YOU GOT IT!!!!')
+                            setGameOver(true)
                         }
                     }else{
                         setMessageText('That equation does not compute!')
