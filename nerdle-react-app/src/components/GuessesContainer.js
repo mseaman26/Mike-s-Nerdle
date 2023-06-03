@@ -41,9 +41,9 @@ const GuessesContainer = ()=> {
     const handleKeyDown = (event) => {
         console.log(event)
         let keyEntered
-        if(event.type === 'click'){
-            
-            keyEntered = event.target.innerText
+        if(event.key.type === 'click'){
+            console.log('this is a click')
+            keyEntered = event.key.target.innerText
         }else{
             keyEntered = event.key
         }
@@ -125,14 +125,12 @@ const GuessesContainer = ()=> {
             setGuesses([...storedGuesses, ...currentGuess]);
           };
         window.addEventListener('keydown', handleKeyDown)
-        window.addEventListener('click', handleKeyDown)
         updateGuesses()
         
         localStorage.setItem('classesArray', JSON.stringify(classesArray))
         updateKeys()
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
-            window.removeEventListener("click", handleKeyDown);
           };
         
     }, [currentGuess, setGuesses, setCurrentGuess, classesArray,])
@@ -150,7 +148,7 @@ const GuessesContainer = ()=> {
         <div className="guessesContainer">
             {boxes}
         </div>
-        <Keyboard onClick={handleKeyDown}></Keyboard>
+        <Keyboard handleKeyDown={handleKeyDown}></Keyboard>
         </>
     )
 
