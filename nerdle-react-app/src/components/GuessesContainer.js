@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useGuessesContext } from "../utils/guessesContext";
 import Keyboard from "./Keyboard";
+import GameOver from "./GameOver";
 const math = require('mathjs')
 
 const GuessesContainer = ()=> {
@@ -29,6 +30,7 @@ const GuessesContainer = ()=> {
             }else if(comparisonEquation.includes(guessString[i]) && equation[i] !== guessString[i]){
                 comparisonEquation[comparisonEquation.indexOf(guessString[i])] = 'X'
                 newColors.push('guessBox misplaced')
+            //check for correct chars
             }else{
                 comparisonEquation[comparisonEquation.indexOf(guessString[i])] = 'X'
                 newColors.push('guessBox correct')
@@ -38,8 +40,21 @@ const GuessesContainer = ()=> {
         
     }
     
+    const checkLastGuess =  () => {
+        if(guesses.length >= 8){
+            let lastGuess = ''
+            for(let i = guesses.length - 8; i < guesses.length; i++){
+                lastGuess += guesses[i]
+            }
+            if(lastGuess === equation){
+                setGameOver(true)
+            }
+        }
+    }
+
     const handleKeyDown = (event) => {
         if(gameOver === true){
+            {console.log('game over')}
             return
         }
         console.log(event)
@@ -123,7 +138,9 @@ const GuessesContainer = ()=> {
           return updatedKeyClassesObj;
         });
       };
-         
+    useEffect (() => {
+        checkLastGuess()
+    }, [])     
     useEffect(() => {
         const updateGuesses = () => {
             setGuesses([...storedGuesses, ...currentGuess]);
@@ -137,7 +154,7 @@ const GuessesContainer = ()=> {
             window.removeEventListener('keydown', handleKeyDown);
           };
         
-    }, [currentGuess, setGuesses, setCurrentGuess, classesArray,])
+    }, [currentGuess, setGuesses, setCurrentGuess, classesArray, gameOver])
 
     useEffect(() => {
         console.log(keyClassesObj);
@@ -153,6 +170,10 @@ const GuessesContainer = ()=> {
             {boxes}
         </div>
         <Keyboard handleKeyDown={handleKeyDown}></Keyboard>
+        {gameOver ? (
+            
+            <GameOver></GameOver>
+        ) : <></>}
         </>
     )
 
