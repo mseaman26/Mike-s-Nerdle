@@ -13,7 +13,7 @@ const GameOver = () => {
         const blackTile = '⬛'
         const purpleTile = '🟪'
         const greenTile = '🟩'
-        let tilesString = "Mike's Wordle #"+nerdleNumber+"\n"
+        let tilesString = "Mike's Nerdle #"+nerdleNumber+"\n"
         for(let i = 0; i < classesArray.length; i++){
             if(classesArray[i] === 'guessBox correct'){
                 tilesString += greenTile
