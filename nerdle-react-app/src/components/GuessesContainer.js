@@ -173,7 +173,7 @@ const GuessesContainer = ()=> {
             window.removeEventListener('keydown', handleKeyDown);
           };
         
-    }, [currentGuess, setGuesses, setCurrentGuess, classesArray, gameOver, nerdleNumber])
+    }, [currentGuess, setGuesses, setCurrentGuess, classesArray, nerdleNumber])
 
     useEffect(() => {
         console.log(keyClassesObj);

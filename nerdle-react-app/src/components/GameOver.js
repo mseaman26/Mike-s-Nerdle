@@ -54,6 +54,7 @@ const GameOver = () => {
                     <div className="closeButton" onClick={handleCloseButton}>X</div>
                     <h3 className="gameOverHeader">You won in {guesses.length/8} guesses</h3>
                     <div className="shareButton" onClick={handleShare}>Share</div>
+                    <h3>Upcoming Feature: Keeping track of your results...</h3>
                 </div>
             </div>
         ) : <></>}
