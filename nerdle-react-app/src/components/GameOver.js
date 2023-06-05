@@ -11,7 +11,7 @@ const GameOver = () => {
 
     const handleShare = () => {
         const blackTile = '⬛'
-        const purpleTile = '⬛'
+        const purpleTile = '🟪'
         const greenTile = '🟩'
         let tilesString = "Mike's Wordle #"+nerdleNumber+"\n"
         for(let i = 0; i < classesArray.length; i++){
