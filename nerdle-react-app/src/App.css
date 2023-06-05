@@ -149,14 +149,28 @@
   color: black;
   
   text-align: start;
-  padding-left: 10px;
   text-align: center;
   position: relative;
 }
 .closeButton{
+  cursor: default;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  left: 10px;
+  left: 15px;
   top: 10px;
   display: inline;
+}
+.gameOverHeader{
+  color: var(--correct);
+  margin-top: 50px;
+}
+.shareButton{
+  display: inline;
+  color: #fff;
+  background-color: rgb(62 85 143);
+  padding: 15px;
+  border-radius: 5px;
 }
 
