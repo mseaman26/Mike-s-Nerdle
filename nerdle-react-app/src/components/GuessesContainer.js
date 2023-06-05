@@ -5,11 +5,29 @@ import Keyboard from "./Keyboard";
 const math = require('mathjs')
 
 const GuessesContainer = ()=> {
-    const {equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, setMessageText, gameOver, setGameOver} = useGuessesContext()
+    const {equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, setMessageText, gameOver, setGameOver, nerdleNumber} = useGuessesContext()
+
+    
 
     let storedGuesses = JSON.parse(localStorage.getItem('guesses')) || []
     const equationKeys = ['1','2','3','4','5','6','7','8','9','0','+','-','*','/','=']
 
+
+    const newGame = () => {
+        const previousNerdleNumber = JSON.parse(localStorage.getItem('nerdleNumber'))
+        if(nerdleNumber !== previousNerdleNumber){
+            console.log('clear game')
+            setGuesses([])
+            setClassesArray([])
+            setKeyClassesObj({})
+            localStorage.removeItem('guesses')
+            localStorage.removeItem('classesArray')
+            
+            localStorage.setItem('nerdleNumber', JSON.stringify(nerdleNumber))
+            updateKeys()
+            window.location.reload()
+        }
+    }
     //build boxes and color code keys
     const boxes = Array.from({ length: 48 }, (_, index) => {
         const text = guesses[index] || ""; // Use data[index] if available, otherwise use an empty string
@@ -125,6 +143,7 @@ const GuessesContainer = ()=> {
       };
          
     useEffect(() => {
+        
         const updateGuesses = () => {
             setGuesses([...storedGuesses, ...currentGuess]);
           };
@@ -137,14 +156,17 @@ const GuessesContainer = ()=> {
             window.removeEventListener('keydown', handleKeyDown);
           };
         
-    }, [currentGuess, setGuesses, setCurrentGuess, classesArray,])
+    }, [currentGuess, setGuesses, setCurrentGuess, classesArray, nerdleNumber])
 
     useEffect(() => {
         console.log(keyClassesObj);
-    }, [keyClassesObj]);
+    }, [keyClassesObj, nerdleNumber]);
     useEffect(() => {
         console.log(keyClassesObj);
     }, [setKeyClassesObj])
+    useEffect(() => {
+        newGame()
+    },[nerdleNumber, keyClassesObj])
     
 
     return(
