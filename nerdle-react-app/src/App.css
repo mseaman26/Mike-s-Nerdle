@@ -167,9 +167,11 @@
   margin-top: 50px;
 }
 .shareButton{
+  cursor: default;
   display: inline;
   color: #fff;
-  background-color: rgb(62 85 143);
+  /* background-color: rgb(62 85 143); */
+  background-color: var(--misplaced);
   padding: 15px;
   border-radius: 5px;
 }
