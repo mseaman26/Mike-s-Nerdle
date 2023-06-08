@@ -6,8 +6,8 @@ export const useGuessesContext = () => useContext(GuessesContext)
 
 export const GuessesProvider = ({children}) => {
 
-    const equation = '108/12=9'
-    const [nerdleNumber, setNerdleNumber] = useState(5)
+    const equation = '13*4=52'
+    const [nerdleNumber, setNerdleNumber] = useState(6)
     const [guesses, setGuesses] = useState(JSON.parse(localStorage.getItem('guesses')) || [])
     const [currentGuess, setCurrentGuess] = useState([])
     const [classesArray, setClassesArray] = useState(JSON.parse(localStorage.getItem('classesArray')) || [])
