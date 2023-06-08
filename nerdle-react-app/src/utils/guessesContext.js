@@ -14,10 +14,12 @@ export const GuessesProvider = ({children}) => {
     const [keyClassesObj, setKeyClassesObj] = useState({})
     const [messageText, setMessageText] = useState('')
     const [gameOver, setGameOver] = useState(false)
+    const [results, setResults] = useState(JSON.parse(localStorage.getItem('results')) || {})
+    const [gamesPlayed, setGamesPlayed] = useState(JSON.parse(localStorage.getItem('gamesPlayed')) || [])
 
 
     return(
-        <GuessesContext.Provider value={{equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, messageText, setMessageText, gameOver, setGameOver, nerdleNumber, setNerdleNumber}}>
+        <GuessesContext.Provider value={{equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, messageText, setMessageText, gameOver, setGameOver, nerdleNumber, setNerdleNumber, results, setResults, gamesPlayed, setGamesPlayed}}>
             {children}
         </GuessesContext.Provider>
     )

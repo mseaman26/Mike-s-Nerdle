@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useGuessesContext } from "../utils/guessesContext";
+import Results from "./Results";
 
 const GameOver = () => {  
 
-    const {guesses, nerdleNumber, classesArray} = useGuessesContext()
+    const {guesses, nerdleNumber, classesArray, results, setResults, gamesPlayed, setGamesPlayed} = useGuessesContext()
     const [gameOverShown, setGameOverShown] = useState(false)
     const handleCloseButton = () => {
         setGameOverShown(false)
     }
 
+    const wonInOne = guesses.length <= 8
     const handleShare = () => {
         const blackTile = '⬛'
         const purpleTile = '🟪'
@@ -52,11 +54,12 @@ const GameOver = () => {
             <div className='gameOver'>
                 <div className="gameOverCard">
                     <div className="closeButton" onClick={handleCloseButton}>X</div>
-                    <h3 className="gameOverHeader">You won in {guesses.length/8} guesses</h3>
+                    <h3 className="gameOverHeader">You won in {guesses.length/8} {wonInOne ? 'guess' : 'guesses'}!</h3>
                     <div className="shareButton" onClick={handleShare}>Share</div>
-                    <h3>Upcoming Feature: Keeping track of your results...</h3>
+                    <Results/>
                 </div>
             </div>
+            
         ) : <></>}
             
         </>

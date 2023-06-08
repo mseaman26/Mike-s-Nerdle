@@ -8,7 +8,7 @@ const Keyboard = (props) => {
     const row2 = ['+','-','*','/','=','Enter','Delete']
 
     const handleKeyClick = (key) => {
-        props.handleKeyDown({ key });
+        props.handleKeyDown({ key: key });
       };
     
     return(
