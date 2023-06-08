@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useGuessesContext } from "../utils/guessesContext";
+import { number } from "mathjs";
 
 const Results = () => {
     console.log('render')
     const {nerdleNumber, guesses} = useGuessesContext()
-    const numberOfGuesses = guesses/8
+    const numberOfGuesses = (guesses.length/8).toString()
+    console.log(numberOfGuesses)
 
     useEffect(() => {
         let gamesPlayed = JSON.parse(localStorage.getItem('gamesPlayed')) || []

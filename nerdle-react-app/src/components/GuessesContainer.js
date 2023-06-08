@@ -3,15 +3,12 @@ import { useEffect } from "react";
 import { useGuessesContext } from "../utils/guessesContext";
 import Keyboard from "./Keyboard";
 import GameOver from "./GameOver";
-import generateEquation from "../utils/equationGenerator";
 const math = require('mathjs')
 
-
 const GuessesContainer = ()=> {
-    console.log('game over render')
     const {equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, setMessageText, gameOver, setGameOver, nerdleNumber} = useGuessesContext()
 
-    // console.log(generateEquation())
+    
 
     let storedGuesses = JSON.parse(localStorage.getItem('guesses')) || []
     const equationKeys = ['1','2','3','4','5','6','7','8','9','0','+','-','*','/','=']
@@ -29,7 +26,7 @@ const GuessesContainer = ()=> {
             
             localStorage.setItem('nerdleNumber', JSON.stringify(nerdleNumber))
             updateKeys()
-           
+            window.location.reload()
         }
     }
     //build boxes and color code keys
@@ -176,9 +173,14 @@ const GuessesContainer = ()=> {
             window.removeEventListener('keydown', handleKeyDown);
           };
         
-    }, [handleKeyDown])
+    }, [currentGuess, setGuesses, setCurrentGuess, classesArray, nerdleNumber])
 
-    
+    useEffect(() => {
+        console.log(keyClassesObj);
+    }, [keyClassesObj, nerdleNumber]);
+    useEffect(() => {
+        console.log(keyClassesObj);
+    }, [setKeyClassesObj])
     useEffect(() => {
         newGame()
     },[nerdleNumber, keyClassesObj])
