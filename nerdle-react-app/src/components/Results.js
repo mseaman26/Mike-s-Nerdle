@@ -1,40 +1,25 @@
 import React, { useEffect } from "react";
 import { useGuessesContext } from "../utils/guessesContext";
-import { loschmidtDependencies } from "mathjs";
 
 const Results = () => {
     console.log('render')
-    const {nerdleNumber, results, setResults, gamesPlayed, setGamesPlayed, guesses} = useGuessesContext()
+    const {nerdleNumber, guesses} = useGuessesContext()
+    const numberOfGuesses = guesses/8
 
     useEffect(() => {
+        let gamesPlayed = JSON.parse(localStorage.getItem('gamesPlayed')) || []
         if(!gamesPlayed.includes(nerdleNumber)){
-            setGamesPlayed([...gamesPlayed, nerdleNumber])
-            let numberOfGuesses = guesses.length/8
-            setResults((prev) => {
-                let updatedResults = {...prev}
-                console.log('prev', prev)
-                if(updatedResults[numberOfGuesses] === undefined){
-                    updatedResults[numberOfGuesses] = 1
-                }else{
-                    console.log('got here')
-                    updatedResults[numberOfGuesses] += 1
-                }
-                console.log(results)
-                return updatedResults
-            })
-            
-            
+            gamesPlayed.push(nerdleNumber)
+            localStorage.setItem('gamesPlayed', JSON.stringify(gamesPlayed))
+            let results = JSON.parse(localStorage.getItem('results')) || {}
+            if(!results[numberOfGuesses]){
+                results[numberOfGuesses] = 1
+            }else{
+                results[numberOfGuesses] += 1
+            }
+            localStorage.setItem('results', JSON.stringify(results))
         }
-    },[nerdleNumber, gamesPlayed, guesses, setGamesPlayed, setResults])
-
-    useEffect(() => {
-        localStorage.setItem('gamesPlayed', JSON.stringify(gamesPlayed))
-    }, [gamesPlayed])
-
-    useEffect(() => {
-        localStorage.setItem('results', JSON.stringify(results))
-        console.log(results)
-    }, [results])
+    }, [])
 
     return (
         <></>
