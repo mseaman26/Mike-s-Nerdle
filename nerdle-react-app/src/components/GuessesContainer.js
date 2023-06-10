@@ -17,7 +17,6 @@ const GuessesContainer = ()=> {
     const newGame = () => {
         const previousNerdleNumber = JSON.parse(localStorage.getItem('nerdleNumber'))
         if(nerdleNumber !== previousNerdleNumber){
-            console.log('clear game')
             setGuesses([])
             setClassesArray([])
             setKeyClassesObj({})
@@ -38,8 +37,9 @@ const GuessesContainer = ()=> {
     
     //color code guesses
     const colorCodeGuess = (guessString) => {
+        console.log(equation)
         let newColors = []
-        let comparisonEquation = equation.split('')
+        let comparisonEquation = equation ? equation.split('') : ''
         for(let i = 0; i < guessString.length; i++){
             //check for absent chars
             if(!comparisonEquation.includes(guessString[i])){
@@ -59,12 +59,15 @@ const GuessesContainer = ()=> {
     }
     
     const checkLastGuess =  () => {
+        console.log('checking last guess', guesses)
+        console.log('equation: ',equation)
         if(guesses.length >= 8){
             let lastGuess = ''
             for(let i = guesses.length - 8; i < guesses.length; i++){
                 lastGuess += guesses[i]
             }
             if(lastGuess === equation){
+                console.log('setting game over to true')
                 setGameOver(true)
             }
         }
@@ -72,26 +75,21 @@ const GuessesContainer = ()=> {
 
     const handleKeyDown = (event) => {
         if(gameOver === true){
-            {console.log('game over')}
             return
         }
-        console.log(event)
         let keyEntered
         if(event.key.type === 'click'){
-            console.log('this is a click')
             keyEntered = event.key.target.innerText
         }else{
             keyEntered = event.key
         }
         if(equationKeys.includes(keyEntered)){
             if(currentGuess.length < 8){
-                console.log('keyEntered, ', keyEntered)
                 setCurrentGuess((prevGuess) => [...prevGuess, keyEntered])
                 setGuesses([...storedGuesses, ...currentGuess])
             } 
         } 
         if(keyEntered === 'Backspace' || keyEntered === 'Delete'){
-            console.log('keyEntered, ', keyEntered)
             setMessageText('')
             let newGuess = currentGuess
             newGuess.pop()
@@ -158,7 +156,8 @@ const GuessesContainer = ()=> {
       };
     useEffect (() => {
         checkLastGuess()
-    }, [])     
+    }, [equation])   
+    
     useEffect(() => {
         
         const updateGuesses = () => {
@@ -173,14 +172,9 @@ const GuessesContainer = ()=> {
             window.removeEventListener('keydown', handleKeyDown);
           };
         
-    }, [currentGuess, setGuesses, setCurrentGuess, classesArray, nerdleNumber])
+    }, [currentGuess, setGuesses, setCurrentGuess, classesArray, nerdleNumber, equation])
 
-    useEffect(() => {
-        console.log(keyClassesObj);
-    }, [keyClassesObj, nerdleNumber]);
-    useEffect(() => {
-        console.log(keyClassesObj);
-    }, [setKeyClassesObj])
+
     useEffect(() => {
         newGame()
     },[nerdleNumber, keyClassesObj])
