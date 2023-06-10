@@ -1,15 +1,18 @@
 import React, { createContext, useContext, useState, useEffect} from 'react'
 const equationsFile = require('./shuffled_equations.txt')
+const dayjs = require('dayjs')
 let equations
 
-
+let dayIndex = parseInt(dayjs().format('D')) - dayjs('2012-06-09').format('D')
+console.log(dayIndex)
 const GuessesContext = createContext()
 
 export const useGuessesContext = () => useContext(GuessesContext)
 
 export const GuessesProvider = ({children}) => {
 
-    const [nerdleNumber, setNerdleNumber] = useState(9)
+    const [nerdleNumber, setNerdleNumber] = useState(dayIndex)
+    // const [nerdleNumber, setNerdleNumber] = useState(dayjs().format('ss'))
     const [equation, setEquation] = useState('')
     const [guesses, setGuesses] = useState(JSON.parse(localStorage.getItem('guesses')) || [])
     const [currentGuess, setCurrentGuess] = useState([])
@@ -27,12 +30,19 @@ export const GuessesProvider = ({children}) => {
             })
             .then((text) => {
                 equations = text.split('\n')
-                
-                console.log(equation)
+                let date = JSON.parse(localStorage.getItem('date')) || ''
+                if(dayjs().format('mm') !== date){
+                    localStorage.setItem('date', JSON.stringify(dayjs().format('mm')))
+                    
+                    localStorage.setItem('nerdleNumber', nerdleNumber+1)
+                }
+                console.log(nerdleNumber)
                 setEquation(equations[nerdleNumber])
             })
 
-
+            useEffect(() => {
+                localStorage.setItem('nerdleNumber', nerdleNumber)
+            }, [nerdleNumber])
     return(
 
             <GuessesContext.Provider value={{equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, messageText, setMessageText, gameOver, setGameOver, nerdleNumber, setNerdleNumber, results, setResults, gamesPlayed, setGamesPlayed}}>

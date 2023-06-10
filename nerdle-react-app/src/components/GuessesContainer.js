@@ -6,7 +6,7 @@ import GameOver from "./GameOver";
 const math = require('mathjs')
 
 const GuessesContainer = ()=> {
-    const {equation, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, setMessageText, gameOver, setGameOver, nerdleNumber} = useGuessesContext()
+    const {equation, setNerdleNumber, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, setMessageText, gameOver, setGameOver, nerdleNumber} = useGuessesContext()
 
     
 
