@@ -5,7 +5,6 @@ let equations
 
 let dayIndex = parseInt(dayjs().format('D')) - dayjs('2012-06-08').format('D')+5
 // let dayIndex = parseInt(dayjs().format('mm'))
-console.log(dayIndex)
 const GuessesContext = createContext()
 
 export const useGuessesContext = () => useContext(GuessesContext)

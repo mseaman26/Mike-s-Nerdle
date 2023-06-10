@@ -36,7 +36,6 @@ const generateEquation = () => {
   
     
     else{
-        console.log(equationString.length + answer.toString().length)
         return equationString
     }
 

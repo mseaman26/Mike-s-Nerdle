@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useGuessesContext } from "../utils/guessesContext";
 
 const Results = () => {
-    console.log('useeffect triggered')
     const {nerdleNumber, guesses} = useGuessesContext()
     const numberOfGuesses = (guesses.length/8)
-    console.log(numberOfGuesses)
     const [resultsArray, setResultsArray] = useState([])
     let results = JSON.parse(localStorage.getItem('results')) || {}
 
@@ -46,7 +44,6 @@ const Results = () => {
         <h3>Your Results:</h3>
         {resultsArray.map((result, index) => {
             let barWidth = result/greatest*100
-            console.log(resultsArray)
             return(
                 <div key={`result_div_${index}`}className="single_result">
                     <p key={`result_p_${index}`}>{`${index +1}:`}</p>

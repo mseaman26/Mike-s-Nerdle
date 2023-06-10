@@ -37,7 +37,6 @@ const GuessesContainer = ()=> {
     
     //color code guesses
     const colorCodeGuess = (guessString) => {
-        console.log(equation)
         let newColors = []
         let comparisonEquation = equation ? equation.split('') : ''
         for(let i = 0; i < guessString.length; i++){
@@ -59,15 +58,12 @@ const GuessesContainer = ()=> {
     }
     
     const checkLastGuess =  () => {
-        console.log('checking last guess', guesses)
-        console.log('equation: ',equation)
         if(guesses.length >= 8){
             let lastGuess = ''
             for(let i = guesses.length - 8; i < guesses.length; i++){
                 lastGuess += guesses[i]
             }
             if(lastGuess === equation){
-                console.log('setting game over to true')
                 setGameOver(true)
             }
         }
