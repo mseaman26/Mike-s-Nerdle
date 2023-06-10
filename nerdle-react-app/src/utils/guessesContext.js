@@ -3,7 +3,8 @@ const equationsFile = require('./shuffled_equations.txt')
 const dayjs = require('dayjs')
 let equations
 
-let dayIndex = parseInt(dayjs().format('D')) - dayjs('2012-06-09').format('D')
+let dayIndex = parseInt(dayjs().format('D')) - dayjs('2012-06-08').format('D')
+// let dayIndex = parseInt(dayjs().format('mm'))
 console.log(dayIndex)
 const GuessesContext = createContext()
 
