@@ -1,4 +1,7 @@
 import React, { createContext, useContext, useState} from 'react'
+const equationsFile = require('./shuffled_equations.txt')
+const equations = equationsFile.trim().split('\n');
+
 
 const GuessesContext = createContext()
 
@@ -6,8 +9,9 @@ export const useGuessesContext = () => useContext(GuessesContext)
 
 export const GuessesProvider = ({children}) => {
 
-    const equation = '13+14=27'
+    console.log(equations)
     const [nerdleNumber, setNerdleNumber] = useState(6)
+    const equation = '13+14=27'
     const [guesses, setGuesses] = useState(JSON.parse(localStorage.getItem('guesses')) || [])
     const [currentGuess, setCurrentGuess] = useState([])
     const [classesArray, setClassesArray] = useState(JSON.parse(localStorage.getItem('classesArray')) || [])
