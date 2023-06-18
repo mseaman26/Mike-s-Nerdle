@@ -25,6 +25,12 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Mike's Nerdle!</title>
+    <script>
+      window.onload = function() {
+        // Send the page height to the parent page
+        window.parent.postMessage({ height: document.body.scrollHeight }, '*');
+      };
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
