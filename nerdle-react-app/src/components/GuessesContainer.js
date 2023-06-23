@@ -37,22 +37,38 @@ const GuessesContainer = ()=> {
     
     //color code guesses
     const colorCodeGuess = (guessString) => {
-        let newColors = []
+        let newColors = ["","","","","","","",""]
         let comparisonEquation = equation ? equation.split('') : ''
+        //check for correct letters
         for(let i = 0; i < guessString.length; i++){
             //check for absent chars
-            if(!comparisonEquation.includes(guessString[i])){
-                newColors.push('guessBox absent')
-            //check for misplaced chars
-            }else if(comparisonEquation.includes(guessString[i]) && equation[i] !== guessString[i]){
-                comparisonEquation[comparisonEquation.indexOf(guessString[i])] = 'X'
-                newColors.push('guessBox misplaced')
-            //check for correct chars
-            }else{
-                comparisonEquation[comparisonEquation.indexOf(guessString[i])] = 'X'
-                newColors.push('guessBox correct')
+            if(equation[i] === guessString[i]){
+                comparisonEquation[i] = 'X'
+                newColors[i] = 'guessBox correct'
             }
         }
+        //check for misplaced chars
+        for(let i = 0; i < guessString.length; i++){
+            if(comparisonEquation.includes(guessString[i]) && equation[i] !== guessString[i]){
+                comparisonEquation[i] = 'X'
+                newColors[i] = 'guessBox misplaced'
+            }
+        }
+        for(let i = 0; i < guessString.length; i++){
+            if(newColors[i] === ""){
+                newColors[i] = 'guessBox absent'
+            }
+        }
+            //check for misplaced chars
+            // }else if(comparisonEquation.includes(guessString[i]) && equation[i] !== guessString[i]){
+            //     comparisonEquation[comparisonEquation.indexOf(guessString[i])] = 'X'
+            //     newColors.push('guessBox misplaced')
+            // //check for correct chars
+            // }else{
+            //     newColors.push('guessBox absent')
+                
+            // }
+        
         setClassesArray([...classesArray,...newColors])
         
     }
