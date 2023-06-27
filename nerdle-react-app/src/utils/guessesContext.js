@@ -37,7 +37,8 @@ export const GuessesProvider = ({children}) => {
                 //     localStorage.setItem('nerdleNumber', nerdleNumber+1)
                 // }
                 // console.log(nerdleNumber)
-                setEquation(equations[nerdleNumber])
+                //setEquation(equations[nerdleNumber])
+                setEquation('55-40=15')
             })
 
             useEffect(() => {
