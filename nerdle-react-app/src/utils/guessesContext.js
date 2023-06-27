@@ -38,7 +38,7 @@ export const GuessesProvider = ({children}) => {
                 // }
                 // console.log(nerdleNumber)
                 //setEquation(equations[nerdleNumber])
-                setEquation('55-40=15')
+                setEquation('23+27=50') 
             })
 
             useEffect(() => {
