@@ -42,15 +42,22 @@ const GuessesContainer = ()=> {
         //check for correct letters
         for(let i = 0; i < guessString.length; i++){
             //check for absent chars
+           
             if(equation[i] === guessString[i]){
+                console.log('equation', equation)
+                console.log('guessstring',guessString)
+                console.log(`Xing out ${guessString[i]}`)
                 comparisonEquation[i] = 'X'
                 newColors[i] = 'guessBox correct'
             }
         }
         //check for misplaced chars
         for(let i = 0; i < guessString.length; i++){
+            console.log(`guess string at index ${i} is ${guessString[i]}`)
             if(comparisonEquation.includes(guessString[i]) && equation[i] !== guessString[i]){
-                comparisonEquation[i] = 'X'
+                console.log(guessString[i], " is misplaced")
+                let indexToX = comparisonEquation.indexOf(guessString[i])
+                comparisonEquation[indexToX] = 'X'
                 newColors[i] = 'guessBox misplaced'
             }
         }
