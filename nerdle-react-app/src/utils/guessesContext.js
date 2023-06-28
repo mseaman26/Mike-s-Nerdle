@@ -24,22 +24,38 @@ export const GuessesProvider = ({children}) => {
     const [gamesPlayed, setGamesPlayed] = useState(JSON.parse(localStorage.getItem('gamesPlayed')) || [])
 
 
-        fetch(equationsFile)
-            .then((response) => {
-                return response.text()
-            })
-            .then((text) => {
-                equations = text.split('\n')
-                let date = JSON.parse(localStorage.getItem('date')) || ''
-                if(dayjs().format('mm') !== date){
-                    localStorage.setItem('date', JSON.stringify(dayjs().format('mm')))
+        // fetch(equationsFile)
+        //     .then((response) => {
+        //         return response.text()
+        //     })
+        //     .then((text) => {
+        //         equations = text.split('\n')
+        //         let date = JSON.parse(localStorage.getItem('date')) || ''
+        //         if(dayjs().format('mm') !== date){
+        //             localStorage.setItem('date', JSON.stringify(dayjs().format('mm')))
                     
-                    localStorage.setItem('nerdleNumber', nerdleNumber+1)    
-                }
-                console.log(nerdleNumber)
-                setEquation(equations[nerdleNumber])
-                //setEquation('23+27=50') 
-            })
+        //             localStorage.setItem('nerdleNumber', nerdleNumber+1)    
+        //         }
+        //         console.log(nerdleNumber)
+        //         setEquation(equations[nerdleNumber])
+        //         //setEquation('23+27=50') 
+        //     })
+        fetch(equationsFile)
+        .then((response) => {
+            return response.text()
+        })
+        .then((text) => {
+            equations = text.split('\n')
+            let date = JSON.parse(localStorage.getItem('date')) || ''
+            if(dayIndex !== date){
+                localStorage.setItem('date', JSON.stringify(dayIndex))
+                
+                localStorage.setItem('nerdleNumber', nerdleNumber+1)    
+            }
+            console.log(nerdleNumber)
+            setEquation(equations[nerdleNumber])
+            //setEquation('23+27=50') 
+        })
 
             useEffect(() => {
                 localStorage.setItem('nerdleNumber', nerdleNumber)
