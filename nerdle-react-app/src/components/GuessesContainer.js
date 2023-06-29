@@ -34,7 +34,7 @@ const GuessesContainer = ()=> {
    
         return <div key={index} className={classesArray[index] ? classesArray[index] : 'guessBox guessBox_blank'}>{text}</div>;
       });
-    
+   
     //color code guesses
     const colorCodeGuess = (guessString) => {
         let newColors = ["","","","","","","",""]
