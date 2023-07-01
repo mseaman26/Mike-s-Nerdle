@@ -46,7 +46,7 @@ const GuessesContainer = ()=> {
             console.log('comp com at check for greens',compCom)
             for(let i = 0; i < guessString.length; i++){
                 for(let j = 0; j < compCom.length; j++){
-                    if(guessString[i] === compCom[j][i] && guessString[i] !== 'X'){
+                    if(guessString[i] === compCom[j][i] && compCom[j][i] !== 'X'){
                         newColors[i] = 'guessBox correct'
                         console.log(`color coding ${guessString[i]} at index ${i}`)
                         setCommunicative((prev) => {
@@ -75,15 +75,21 @@ const GuessesContainer = ()=> {
         
         checkGreens() 
         console.log('after check greens, compcom = ', compCom)  
-            // if(equation[i] === guessString[i]){
-            //     console.log('equation', equation)
-            //     console.log('guessstring',guessString)
-            //     console.log(`Xing out ${guessString[i]}`)
-            //     comparisonEquation[i] = 'X'
-            //     newColors[i] = 'guessBox correct'
-            // }
         
         //check for misplaced chars
+
+        for(let i = 0; i < guessString.length; i++){
+            if(compCom[0].includes(guessString[i])&& compCom[0][i] !=='X'){
+                newColors[i] = 'guessBox misplaced'
+            }
+        }
+
+        //check for absent
+        for(let i = 0; i < guessString.length; i++){
+            if(newColors[i] === ''){
+                newColors[i] = 'guessBox absent'
+            }
+        }
         // for(let i = 0; i < guessString.length; i++){
         //     console.log(`guess string at index ${i} is ${guessString[i]}`)
         //     if(comparisonEquation.includes(guessString[i]) && equation[i] !== guessString[i]){
