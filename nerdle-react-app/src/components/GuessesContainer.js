@@ -81,6 +81,7 @@ const GuessesContainer = ()=> {
     }
     
     const checkLastGuess =  () => {
+        console.log('checking last guess')
         if(guesses.length >= 8){
             let lastGuess = ''
             for(let i = guesses.length - 8; i < guesses.length; i++){
