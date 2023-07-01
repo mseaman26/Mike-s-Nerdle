@@ -124,9 +124,14 @@ const GuessesContainer = ()=> {
             for(let i = guesses.length - 8; i < guesses.length; i++){
                 lastGuess += guesses[i]
             }
-            if(lastGuess === equation){
-                setGameOver(true)
+            for(let i = 0; i < communicative.length; i++){
+                if(lastGuess === communicative[i]){
+                    setGameOver(true)
+                }
             }
+            // if(lastGuess === equation){
+            //     setGameOver(true)
+            // }
         }
     }
 
@@ -219,7 +224,7 @@ const GuessesContainer = ()=> {
       };
     useEffect (() => {
         checkLastGuess()
-    }, [equation])   
+    }, [equation, communicative])   
     
     useEffect(() => {
         
