@@ -157,8 +157,8 @@ const GuessesContainer = ()=> {
                                 console.log(guesses)
                                 window.parent.postMessage({ 
                                     nerdleNumber:nerdleNumber,
-                                    result: guesses.length/8
-                                 }, '*');
+                                    result: ( + 1)/8
+                                }, '*');
                             }
                         }
                     }else{
