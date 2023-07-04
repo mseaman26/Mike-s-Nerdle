@@ -157,7 +157,7 @@ const GuessesContainer = ()=> {
                                 console.log(guesses)
                                 window.parent.postMessage({ 
                                     nerdleNumber:nerdleNumber,
-                                    result: ( + 1)/8
+                                    result: (guesses + 1)/8
                                 }, '*');
                             }
                         }
