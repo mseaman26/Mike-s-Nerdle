@@ -154,6 +154,7 @@ const GuessesContainer = ()=> {
                             if(communicative[i] === currentGuessstring){
                                 setMessageText('YOU GOT IT!!!!')
                                 setGameOver(true)
+                                console.log(guesses)
                                 window.parent.postMessage({ 
                                     nerdleNumber:nerdleNumber,
                                     result: guesses.length/8
