@@ -7,11 +7,11 @@ import buildCommunicative from '../utils/buildCommunicative'
 const math = require('mathjs')
 
 
+
 const GuessesContainer = ()=> {
     const {equation, setNerdleNumber, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, setMessageText, gameOver, setGameOver, nerdleNumber} = useGuessesContext()
 
     const [communicative, setCommunicative] = useState(buildCommunicative(equation))
-    console.log(communicative)
     let storedGuesses = JSON.parse(localStorage.getItem('guesses')) || []
     const equationKeys = ['1','2','3','4','5','6','7','8','9','0','+','-','*','/','=']
 
@@ -43,22 +43,18 @@ const GuessesContainer = ()=> {
         let compCom = [...communicative]
         //check for correct letters
         const checkGreens = () => {
-            console.log('comp com at check for greens',compCom)
             for(let i = 0; i < guessString.length; i++){
                 for(let j = 0; j < compCom.length; j++){
                     if(guessString[i] === compCom[j][i] && compCom[j][i] !== 'X'){
                         newColors[i] = 'guessBox correct'
-                        console.log(`color coding ${guessString[i]} at index ${i}`)
                         setCommunicative((prev) => {
                             return prev.filter((eq) => {
                                 return eq[i] === guessString[i]
                             })
                         })
-                        console.log('compcom before filter ', compCom)
                         compCom = compCom.filter((eq) => {
                             return eq[i] === guessString[i]
                         })
-                        console.log('compcom after filter ', compCom)
                         for(let k = 0; k < compCom.length; k++){
                             if(compCom[k][i] === guessString[i]){
                                 let strArray = compCom[k].split('')
@@ -154,7 +150,6 @@ const GuessesContainer = ()=> {
                             if(communicative[i] === currentGuessstring){
                                 setMessageText('YOU GOT IT!!!!')
                                 setGameOver(true)
-                                console.log(guesses)
                                 window.parent.postMessage({ 
                                     nerdleNumber:nerdleNumber,
                                     result: (guesses.length + 1)/8
