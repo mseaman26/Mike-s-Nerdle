@@ -90,30 +90,7 @@ const GuessesContainer = ()=> {
                 newColors[i] = 'guessBox absent'
             }
         }
-        // for(let i = 0; i < guessString.length; i++){
-        //     console.log(`guess string at index ${i} is ${guessString[i]}`)
-        //     if(comparisonEquation.includes(guessString[i]) && equation[i] !== guessString[i]){
-        //         console.log(guessString[i], " is misplaced")
-        //         let indexToX = comparisonEquation.indexOf(guessString[i])
-        //         comparisonEquation[indexToX] = 'X'
-        //         newColors[i] = 'guessBox misplaced'
-        //     }
-        // }
-        // for(let i = 0; i < guessString.length; i++){
-        //     if(newColors[i] === ""){
-        //         newColors[i] = 'guessBox absent'
-        //     }
-        // }
-            //check for misplaced chars
-            // }else if(comparisonEquation.includes(guessString[i]) && equation[i] !== guessString[i]){
-            //     comparisonEquation[comparisonEquation.indexOf(guessString[i])] = 'X'
-            //     newColors.push('guessBox misplaced')
-            // //check for correct chars
-            // }else{
-            //     newColors.push('guessBox absent')
-                
-            // }
-        
+ 
         setClassesArray([...classesArray,...newColors])
         
     }
@@ -129,9 +106,6 @@ const GuessesContainer = ()=> {
                     setGameOver(true)
                 }
             }
-            // if(lastGuess === equation){
-            //     setGameOver(true)
-            // }
         }
     }
 
@@ -146,6 +120,7 @@ const GuessesContainer = ()=> {
             keyEntered = event.key
         }
         if(equationKeys.includes(keyEntered)){
+            //this is where  the logic for editing equation will go
             if(currentGuess.length < 8){
                 setCurrentGuess((prevGuess) => [...prevGuess, keyEntered])
                 setGuesses([...storedGuesses, ...currentGuess])
@@ -179,12 +154,12 @@ const GuessesContainer = ()=> {
                             if(communicative[i] === currentGuessstring){
                                 setMessageText('YOU GOT IT!!!!')
                                 setGameOver(true)
+                                window.parent.postMessage({ 
+                                    nerdleNumber:nerdleNumber,
+                                    result: guesses.length/8
+                                 }, '*');
                             }
                         }
-                        // if(currentGuessstring === equation){
-                        //     setMessageText('YOU GOT IT!!!!')
-                        //     setGameOver(true)
-                        // }
                     }else{
                         setMessageText('That equation does not compute!')
                     }
