@@ -46,11 +46,15 @@ const Results = () => {
             let barWidth = result/greatest*100
             return(
                 <div key={`result_div_${index}`}className="single_result">
-                    <p key={`result_p_${index}`}>{`${index +1}:`}</p>
+                    <div className="result_index">
+                        <p key={`result_p_${index}`}>{`${index +1}:`}</p>
+                    </div>
                     <div key={`result_bar_container_${index}`} className="result_bar_container">
                         <div key={`result_bar_${index}`}className="result_bar" style={{'width':`${barWidth}%`}}></div>
                     </div>
-                    <p key={`result_p2_${index}`}>{`${result}`}</p>
+                    <div className="result_p">
+                        <p key={`result_p2_${index}`} >{`${result}`}</p>
+                    </div>   
                 </div>
             )
         })}

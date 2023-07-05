@@ -4,7 +4,7 @@ import Results from "./Results";
 
 const GameOver = () => {  
 
-    const {guesses, nerdleNumber, classesArray, results, setResults, gamesPlayed, setGamesPlayed} = useGuessesContext()
+    const {guesses, nerdleNumber, equation, classesArray, results, setResults, gamesPlayed, setGamesPlayed} = useGuessesContext()
     const [gameOverShown, setGameOverShown] = useState(false)
     const handleCloseButton = () => {
         setGameOverShown(false)
@@ -55,6 +55,8 @@ const GameOver = () => {
                 <div className="gameOverCard">
                     <div className="closeButton" onClick={handleCloseButton}>X</div>
                     <h3 className="gameOverHeader">You won in {guesses.length/8} {wonInOne ? 'guess' : 'guesses'}!</h3>
+                    <h3>The original equation was...</h3>
+                    <h3>{equation}</h3>
                     <div className="shareButton" onClick={handleShare}>Share</div>
                     <Results/>
                 </div>

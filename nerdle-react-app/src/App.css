@@ -193,4 +193,12 @@
   background-color: var(--correct);
   height: 10px;
 }
+.result_index{
+  width: 7%;
+}
+.result_p{
+  width:7%;
+  display: flex;
+  justify-content: center;
+}
 

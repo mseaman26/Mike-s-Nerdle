@@ -3,7 +3,7 @@ const equationsFile = require('./shuffled_equations.txt')
 const dayjs = require('dayjs')
 let equations
 
-let dayIndex = parseInt(dayjs().format('D')) - dayjs('2012-06-08').format('D')+5
+let dayIndex = dayjs().diff(dayjs('2012-06-08'), 'day') -3945;
 // let dayIndex = parseInt(dayjs().format('mm'))
 const GuessesContext = createContext()
 
@@ -42,19 +42,24 @@ export const GuessesProvider = ({children}) => {
         //     })
         fetch(equationsFile)
         .then((response) => {
+           
             return response.text()
         })
         .then((text) => {
+            
             equations = text.split('\n')
             let date = JSON.parse(localStorage.getItem('date')) || ''
             if(dayIndex !== date){
+                localStorage.clear()
                 localStorage.setItem('date', JSON.stringify(dayIndex))
                 
                 localStorage.setItem('nerdleNumber', nerdleNumber+1)    
             }
             console.log(nerdleNumber)
+            console.log(equations[nerdleNumber])
             setEquation(equations[nerdleNumber])
-            //setEquation('23+27=50') 
+            //setEquation(equations[55])
+            //setEquation('11-1-1=9') 
         })
 
             useEffect(() => {

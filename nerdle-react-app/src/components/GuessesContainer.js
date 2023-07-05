@@ -1,15 +1,17 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGuessesContext } from "../utils/guessesContext";
 import Keyboard from "./Keyboard";
 import GameOver from "./GameOver";
+import buildCommunicative from '../utils/buildCommunicative'
 const math = require('mathjs')
+
+
 
 const GuessesContainer = ()=> {
     const {equation, setNerdleNumber, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, setMessageText, gameOver, setGameOver, nerdleNumber} = useGuessesContext()
 
-    
-
+    const [communicative, setCommunicative] = useState(buildCommunicative(equation))
     let storedGuesses = JSON.parse(localStorage.getItem('guesses')) || []
     const equationKeys = ['1','2','3','4','5','6','7','8','9','0','+','-','*','/','=']
 
@@ -38,44 +40,53 @@ const GuessesContainer = ()=> {
     //color code guesses
     const colorCodeGuess = (guessString) => {
         let newColors = ["","","","","","","",""]
-        let comparisonEquation = equation ? equation.split('') : ''
+        let compCom = [...communicative]
         //check for correct letters
-        for(let i = 0; i < guessString.length; i++){
-            //check for absent chars
-           
-            if(equation[i] === guessString[i]){
-                console.log('equation', equation)
-                console.log('guessstring',guessString)
-                console.log(`Xing out ${guessString[i]}`)
-                comparisonEquation[i] = 'X'
-                newColors[i] = 'guessBox correct'
+        const checkGreens = () => {
+            for(let i = 0; i < guessString.length; i++){
+                for(let j = 0; j < compCom.length; j++){
+                    if(guessString[i] === compCom[j][i] && compCom[j][i] !== 'X'){
+                        newColors[i] = 'guessBox correct'
+                        setCommunicative((prev) => {
+                            return prev.filter((eq) => {
+                                return eq[i] === guessString[i]
+                            })
+                        })
+                        compCom = compCom.filter((eq) => {
+                            return eq[i] === guessString[i]
+                        })
+                        for(let k = 0; k < compCom.length; k++){
+                            if(compCom[k][i] === guessString[i]){
+                                let strArray = compCom[k].split('')
+                                strArray[i] = 'X'
+                                compCom[k] = strArray.join('')
+                            }
+                        }
+                        checkGreens()
+                    }
+                }
             }
+        
         }
+        
+        checkGreens() 
+        console.log('after check greens, compcom = ', compCom)  
+        
         //check for misplaced chars
+
         for(let i = 0; i < guessString.length; i++){
-            console.log(`guess string at index ${i} is ${guessString[i]}`)
-            if(comparisonEquation.includes(guessString[i]) && equation[i] !== guessString[i]){
-                console.log(guessString[i], " is misplaced")
-                let indexToX = comparisonEquation.indexOf(guessString[i])
-                comparisonEquation[indexToX] = 'X'
+            if(compCom[0].includes(guessString[i])&& compCom[0][i] !=='X'){
                 newColors[i] = 'guessBox misplaced'
             }
         }
+
+        //check for absent
         for(let i = 0; i < guessString.length; i++){
-            if(newColors[i] === ""){
+            if(newColors[i] === ''){
                 newColors[i] = 'guessBox absent'
             }
         }
-            //check for misplaced chars
-            // }else if(comparisonEquation.includes(guessString[i]) && equation[i] !== guessString[i]){
-            //     comparisonEquation[comparisonEquation.indexOf(guessString[i])] = 'X'
-            //     newColors.push('guessBox misplaced')
-            // //check for correct chars
-            // }else{
-            //     newColors.push('guessBox absent')
-                
-            // }
-        
+ 
         setClassesArray([...classesArray,...newColors])
         
     }
@@ -87,8 +98,10 @@ const GuessesContainer = ()=> {
             for(let i = guesses.length - 8; i < guesses.length; i++){
                 lastGuess += guesses[i]
             }
-            if(lastGuess === equation){
-                setGameOver(true)
+            for(let i = 0; i < communicative.length; i++){
+                if(lastGuess === communicative[i]){
+                    setGameOver(true)
+                }
             }
         }
     }
@@ -104,6 +117,7 @@ const GuessesContainer = ()=> {
             keyEntered = event.key
         }
         if(equationKeys.includes(keyEntered)){
+            //this is where  the logic for editing equation will go
             if(currentGuess.length < 8){
                 setCurrentGuess((prevGuess) => [...prevGuess, keyEntered])
                 setGuesses([...storedGuesses, ...currentGuess])
@@ -133,9 +147,15 @@ const GuessesContainer = ()=> {
                         localStorage.setItem('guesses', JSON.stringify([...storedGuesses,...currentGuess]))
                         setCurrentGuess([])
                         colorCodeGuess(currentGuessstring)
-                        if(currentGuessstring === equation){
-                            setMessageText('YOU GOT IT!!!!')
-                            setGameOver(true)
+                        for(let i = 0; i < communicative.length; i++){
+                            if(communicative[i] === currentGuessstring){
+                                setMessageText('YOU GOT IT!!!!')
+                                setGameOver(true)
+                                window.parent.postMessage({ 
+                                    nerdleNumber:nerdleNumber,
+                                    result: (guesses.length + 1)/8
+                                }, '*');
+                            }
                         }
                     }else{
                         setMessageText('That equation does not compute!')
@@ -176,7 +196,7 @@ const GuessesContainer = ()=> {
       };
     useEffect (() => {
         checkLastGuess()
-    }, [equation])   
+    }, [equation, communicative])   
     
     useEffect(() => {
         
@@ -199,7 +219,9 @@ const GuessesContainer = ()=> {
         newGame()
     },[nerdleNumber, keyClassesObj])
     
-
+    useEffect(() => {
+        setCommunicative(buildCommunicative(equation));
+      }, [equation]);
     return(
         <>
         <div className="guessesContainer">

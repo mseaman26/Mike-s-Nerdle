@@ -9,7 +9,6 @@ const MainPage = () => {
 
 useEffect(() => {
     window.parent.postMessage({ height: document.body.scrollHeight }, '*');
-    console.log('height: ',document.body.scrollHeight )
 })
 
 const{ messageText } = useGuessesContext()
