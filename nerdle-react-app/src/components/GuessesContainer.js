@@ -75,7 +75,7 @@ const GuessesContainer = ()=> {
         //check for misplaced chars
 
         for(let i = 0; i < guessString.length; i++){
-            if(compCom[0].includes(guessString[i])){
+            if(compCom[0].includes(guessString[i])&& compCom[0][i] !=='X'){
                 let strArray = compCom[0].split('')
                 strArray[strArray.indexOf(guessString[i])] = 'X'
                 compCom[0] = strArray.join('')
