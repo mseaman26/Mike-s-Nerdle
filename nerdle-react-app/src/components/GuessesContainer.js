@@ -10,7 +10,7 @@ const math = require('mathjs')
 
 const GuessesContainer = ()=> {
     const {equation, setNerdleNumber, guesses, setGuesses, currentGuess, setCurrentGuess, classesArray, setClassesArray, keyClassesObj, setKeyClassesObj, setMessageText, gameOver, setGameOver, nerdleNumber} = useGuessesContext()
-
+    console.log(buildCommunicative(equation))
     const [communicative, setCommunicative] = useState(buildCommunicative(equation))
     let storedGuesses = JSON.parse(localStorage.getItem('guesses')) || []
     const equationKeys = ['1','2','3','4','5','6','7','8','9','0','+','-','*','/','=']
@@ -41,6 +41,7 @@ const GuessesContainer = ()=> {
     const colorCodeGuess = (guessString) => {
         let newColors = ["","","","","","","",""]
         let compCom = [...communicative]
+        console.log(compCom)
         //check for correct letters
         const checkGreens = () => {
             for(let i = 0; i < guessString.length; i++){
@@ -58,7 +59,7 @@ const GuessesContainer = ()=> {
                         for(let k = 0; k < compCom.length; k++){
                             if(compCom[k][i] === guessString[i]){
                                 let strArray = compCom[k].split('')
-                                strArray[i] = 'X'
+                                strArray[i] = 'C'
                                 compCom[k] = strArray.join('')
                             }
                         }
@@ -75,20 +76,21 @@ const GuessesContainer = ()=> {
         //check for misplaced chars
 
         for(let i = 0; i < guessString.length; i++){
-            if(compCom[0].includes(guessString[i])){
+            if(compCom[0].includes(guessString[i]) && compCom[0][i] !== guessString[i] && compCom[0][i] !== 'C'){
                 let strArray = compCom[0].split('')
-                strArray[strArray.indexOf(guessString[i])] = 'X'
+                strArray[strArray.indexOf(guessString[i])] = 'M'
                 compCom[0] = strArray.join('')
                 newColors[i] = 'guessBox misplaced'
+                console.log(`checked index ${i} char ${guessString[i]} now compcom is ${compCom}`)
             }
         }
 
         //check for absent
-        // for(let i = 0; i < guessString.length; i++){
-        //     if(newColors[i] === ''){
-        //         newColors[i] = 'guessBox absent'
-        //     }
-        // }
+        for(let i = 0; i < guessString.length; i++){
+            if(newColors[i] === ''){
+                newColors[i] = 'guessBox absent'
+            }
+        }
  
         setClassesArray([...classesArray,...newColors])
         

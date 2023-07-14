@@ -56,10 +56,10 @@ export const GuessesProvider = ({children}) => {
                 localStorage.setItem('nerdleNumber', nerdleNumber+1)    
             }
             console.log(nerdleNumber)
-            //console.log(equations[nerdleNumber])
-            //setEquation(equations[nerdleNumber])
-            setEquation(equations[55])
-            console.log(equations[55])
+            console.log(equations[nerdleNumber])
+            setEquation(equations[nerdleNumber])
+            //setEquation(equations[101])
+            //console.log(equations[101])
             //setEquation('6*7/42=1') 
         })
 
