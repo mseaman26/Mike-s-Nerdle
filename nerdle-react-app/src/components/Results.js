@@ -2,65 +2,55 @@ import React, { useEffect, useState } from "react";
 import { useGuessesContext } from "../utils/guessesContext";
 
 const Results = () => {
-    const {nerdleNumber, guesses} = useGuessesContext()
-    const numberOfGuesses = (guesses.length/8)
-    const [resultsArray, setResultsArray] = useState([])
-    let results = JSON.parse(localStorage.getItem('results')) || {}
+    const { nerdleNumber, guesses } = useGuessesContext();
+    const numberOfGuesses = Math.floor(guesses.length / 8); // Fixed calculation
+    const [resultsArray, setResultsArray] = useState([]);
 
     useEffect(() => {
-        let gamesPlayed = JSON.parse(localStorage.getItem('gamesPlayed')) || []
-        if(!gamesPlayed.includes(nerdleNumber)){
-            gamesPlayed.push(nerdleNumber)
-            localStorage.setItem('gamesPlayed', JSON.stringify(gamesPlayed))
-            
-            if(!results[numberOfGuesses]){
-                results[numberOfGuesses] = 1
-            }else{
-                results[numberOfGuesses] += 1
-            }
-            localStorage.setItem('results', JSON.stringify(results))
-            }
-            let updatedResultsArray = [];
-            for (let i = 1; i <= 6; i++) {
-                if (results[i]) {
-                 updatedResultsArray.push(results[i]);
-                } else {
-                updatedResultsArray.push(0);
-                }
-            }
-      setResultsArray(prevResultsArray => [...updatedResultsArray]);
+        const resultsFromLocalStorage = JSON.parse(localStorage.getItem('results')) || {};
+        const gamesPlayed = JSON.parse(localStorage.getItem('gamesPlayed')) || [];
 
-            
-        
-    }, [setResultsArray])
-    let greatest = 0
-    for(let result of resultsArray){
-        if(result > greatest){
-            greatest = result
+        if (!gamesPlayed.includes(nerdleNumber)) {
+            gamesPlayed.push(nerdleNumber);
+            localStorage.setItem('gamesPlayed', JSON.stringify(gamesPlayed));
+
+            if (!resultsFromLocalStorage[numberOfGuesses]) {
+                resultsFromLocalStorage[numberOfGuesses] = 1;
+            } else {
+                resultsFromLocalStorage[numberOfGuesses] += 1;
+            }
+
+            localStorage.setItem('results', JSON.stringify(resultsFromLocalStorage));
         }
-    }
+
+        const updatedResultsArray = new Array(6).fill(0).map((_, index) => resultsFromLocalStorage[index + 1] || 0);
+        setResultsArray(updatedResultsArray);
+
+    }, [nerdleNumber, numberOfGuesses]);
+
+    const greatest = Math.max(...resultsArray);
+
     return (
         <>
-        <h3>Your Results:</h3>
-        {resultsArray.map((result, index) => {
-            let barWidth = result/greatest*100
-            return(
-                <div key={`result_div_${index}`}className="single_result">
-                    <div className="result_index">
-                        <p key={`result_p_${index}`}>{`${index +1}:`}</p>
+            <h3>Your Results:</h3>
+            {resultsArray.map((result, index) => {
+                const barWidth = (greatest === 0) ? 0 : (result / greatest) * 100;
+                return (
+                    <div key={`result_div_${index}`} className="single_result">
+                        <div className="result_index">
+                            <p key={`result_p_${index}`}>{`${index + 1}:`}</p>
+                        </div>
+                        <div key={`result_bar_container_${index}`} className="result_bar_container">
+                            <div key={`result_bar_${index}`} className="result_bar" style={{ 'width': `${barWidth}%` }}></div>
+                        </div>
+                        <div className="result_p">
+                            <p key={`result_p2_${index}`}>{`${result}`}</p>
+                        </div>
                     </div>
-                    <div key={`result_bar_container_${index}`} className="result_bar_container">
-                        <div key={`result_bar_${index}`}className="result_bar" style={{'width':`${barWidth}%`}}></div>
-                    </div>
-                    <div className="result_p">
-                        <p key={`result_p2_${index}`} >{`${result}`}</p>
-                    </div>   
-                </div>
-            )
-        })}
+                );
+            })}
         </>
-    )
+    );
+};
 
-}
-
-export default Results
+export default Results;
