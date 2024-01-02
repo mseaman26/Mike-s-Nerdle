@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/Mike-s-Nerdle/static/css/main.4362fd55.css",
-    "main.js": "/Mike-s-Nerdle/static/js/main.af81432c.js",
+    "main.js": "/Mike-s-Nerdle/static/js/main.4e197e56.js",
     "static/js/787.102daeef.chunk.js": "/Mike-s-Nerdle/static/js/787.102daeef.chunk.js",
-    "static/media/shuffled_equations.txt": "/Mike-s-Nerdle/static/media/shuffled_equations.14dbd217fc3fe38ef45a.txt",
+    "static/media/shuffled_equations.txt": "/Mike-s-Nerdle/static/media/shuffled_equations.c78b7469c072baad2567.txt",
     "index.html": "/Mike-s-Nerdle/index.html",
     "main.4362fd55.css.map": "/Mike-s-Nerdle/static/css/main.4362fd55.css.map",
-    "main.af81432c.js.map": "/Mike-s-Nerdle/static/js/main.af81432c.js.map",
+    "main.4e197e56.js.map": "/Mike-s-Nerdle/static/js/main.4e197e56.js.map",
     "787.102daeef.chunk.js.map": "/Mike-s-Nerdle/static/js/787.102daeef.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4362fd55.css",
-    "static/js/main.af81432c.js"
+    "static/js/main.4e197e56.js"
   ]
 }
