@@ -57,10 +57,10 @@ export const GuessesProvider = ({children}) => {
             }
             console.log(nerdleNumber)
             console.log(equations[nerdleNumber])
-            setEquation(equations[nerdleNumber])
+            // setEquation(equations[nerdleNumber])
             //setEquation(equations[101])
             //console.log(equations[101])
-            //setEquation('6*7/42=1') 
+            setEquation('16-8/1=8') 
         })
 
             useEffect(() => {
