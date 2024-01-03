@@ -6,6 +6,8 @@ let equations
 let dayIndex = dayjs().diff(dayjs('2012-06-08'), 'day') -3944;
 // let dayIndex = parseInt(dayjs().format('mm'))
 const GuessesContext = createContext()
+const pattern = /^\d\d-\d\*\d=\d$/;
+// const isMatch = pattern.test(inputString);
 
 export const useGuessesContext = () => useContext(GuessesContext)
 
@@ -46,8 +48,15 @@ export const GuessesProvider = ({children}) => {
             return response.text()
         })
         .then((text) => {
-            
             equations = text.split('\n')
+            console.log('equations length: ', equations.length)
+            for (let i = 0; i < equations.length; i++){
+                
+                if(pattern.test(equations[i])){
+                    console.log(i+1)
+                    break
+                }
+            }
             let date = JSON.parse(localStorage.getItem('date')) || ''
             if(dayIndex !== date){
                 localStorage.clear()
@@ -57,10 +66,10 @@ export const GuessesProvider = ({children}) => {
             }
             console.log(nerdleNumber)
             console.log(equations[nerdleNumber])
-            // setEquation(equations[nerdleNumber])
+            setEquation(equations[nerdleNumber])
             //setEquation(equations[101])
             //console.log(equations[101])
-            setEquation('16-8/1=8') 
+            //setEquation('16-8/1=8') 
         })
 
             useEffect(() => {
